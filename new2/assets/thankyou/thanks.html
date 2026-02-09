@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--<meta http-equiv="refresh" content="20;url=https://example.com">-->
+  <title>Alacritys</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Font Awesome (for icons) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="icon" type="image/x-icon" href="../../assets/images/Logo_for_Alacritys_Website.jpg">
+
+  <!-- Removed GSAP, ScrollTrigger, and SplitText CDN scripts -->
+
+
+  <style>
+    .btn-custom:hover {
+      background: #cf0011;
+      color: #fff;
+    }
+
+    .btn-custom {
+      background: #e50215;
+      color: #ffffff;
+    }
+
+    .progress-bar-circular .progress-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #000000;
+      font-size: 0.9rem;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .alacrity-service-price {
+      font-size: 21px;
+      font-weight: 700;
+      margin-top: 0;
+      margin-top: 10px;
+      margin-bottom: 0;
+      color: #000;
+    }
+
+    .alacrity-service-card.alacrity-selected {
+      border: 2px solid #e50215;
+      box-shadow: 0 8px 16px rgba(215, 122, 97, 0.2);
+      background-color: #fff1ea;
+    }
+
+
+    .alacrity-service-name {
+
+      font-size: 16px;
+
+    }
+
+    .style-description {
+      font-size: 14px;
+    }
+
+
+
+    .Start-btn-custom {
+      background: var(--accent-color);
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .circle-menu a:hover {
+      opacity: 1;
+      border: 3px solid #ffba12;
+      box-shadow: #ffd407d6 0pt 0pt 18pt;
+
+    }
+
+    .circle-menu a {
+
+      transition: ease-in all 0.3s;
+    }
+
+    .style-card {
+      transition: ease-in all 0.2s !important;
+      cursor: pointer;
+    }
+
+    .card-checkbox {
+
+      position: absolute;
+      left: 32px;
+      top: 32px;
+    }
+
+    .alacrity-select-service {
+      display: block;
+    }
+
+    .style-card.selected {
+
+      box-shadow: 0 0 13px 2px #ef232345;
+
+    }
+
+    .card-column h3 {
+      font-size: 1rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .card-column {
+      flex: 1 1 100%;
+      text-align: center;
+    }
+
+    .card-column span {
+      /* background-color: #ffdcdc80; */
+      font-size: 14px;
+      padding: 4px;
+      margin: 4px;
+      /* line-height: 2.3rem; */
+      white-space: normal;
+      border-radius: 10px;
+      display: inline-block;
+      word-wrap: break-word;
+      max-width: 100%;
+    }
+
+    .slider-container {
+
+      padding-top: 59px;
+    }
+
+    .alacrity-service-card.active:not(:hover) .alacrity-select-service {
+      display: block;
+    }
+
+    .card-header img {
+      width: 91px;
+      position: absolute;
+      top: -58px;
+      background: #f00;
+      padding: 14px;
+      border-radius: 50%;
+    }
+
+    .alacrity-service-card.far-prev {
+      transform: translateX(-234%) scale(0.8) rotateY(-10deg);
+    }
+
+    .alacrity-service-card.prev {
+      transform: translateX(-147%) scale(0.9) rotateY(-5deg);
+    }
+
+    .alacrity-service-card.next {
+      transform: translateX(47%) scale(0.9) rotateY(5deg);
+    }
+
+    .alacrity-service-card.far-next {
+      transform: translateX(134%) scale(0.8) rotateY(10deg);
+    }
+
+    /* .btn:hover {
+      color: #ffe680;
+      background-color: var(--bs-btn-hover-bg);
+      border-color: var(--bs-btn-hover-border-color);
+    } */
+
+    .summary-cost {
+
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .plan-price {
+        font-size: 2.1rem;
+      }
+
+      button#estimateBackBtn {
+        position: fixed;
+        top: 17px;
+        right: 89px;
+      }
+    }
+
+    /* #plans-scroll {
+      padding: 27px;
+    } */
+
+    button#estimateBackBtn {
+      position: fixed;
+      top: 17px;
+      right: 589px;
+      z-index: 1001;
+      background: #000000;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgb(13 13 13 / 30%);
+    }
+
+    .progress-bar-circular .progress-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #000000;
+      font-size: 0.7rem;
+    }
+
+    .details-plan-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-color);
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .offer-details-card {
+      background: var(--white-color);
+      border: none;
+      border-radius: 16px;
+      box-shadow: 0 8px 15px rgb(53 53 53 / 15%);
+      transition: all 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .offer-details-header {
+      background: #fff2ea;
+      color: #000000;
+      padding: 1.2rem 1.5rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-align: center;
+      border-bottom: none;
+    }
+
+    .offers-grid-column {
+      flex: 0 0 75%;
+    }
+
+    .offers-card {
+      background: var(--white-color);
+      border: none;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .offers-card:hover {
+      box-shadow: 0 12px 40px rgb(82 82 82 / 25%);
+      transform: translateY(-2px);
+    }
+
+
+    .offer-item:hover {
+      border-color: var(--accent-color);
+      background: linear-gradient(135deg, #fff5f5 0%, #ffe6e60a 100%);
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 5px 4px 11px rgb(97 97 97 / 25%);
+    }
+
+
+    .details-card {
+      background: var(--white-color);
+      border: none;
+      border-radius: 16px;
+      transition: all 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .details-card:hover {
+      box-shadow: 0 12px 40px rgb(79 79 79 / 25%);
+      transform: translateY(-2px);
+    }
+
+    .details-list {
+
+      box-shadow: none;
+
+    }
+
+    .content_class {
+      background: #f0f0f075;
+      margin-top: 42px;
+    }
+
+    .offer-details-header h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 13px;
+    }
+
+    .offer-details-card:hover {
+      box-shadow: 0 12px 40px rgb(0 0 0 / 18%);
+      transform: translateY(-2px);
+    }
+
+    :root {
+      --font-size-sm: calc(0.4rem + 0.7vw);
+    }
+
+    @media (max-width: 425px) {
+      .services-header {
+        margin-bottom: 0;
+      }
+    }
+
+    .page_content h1 {
+      font-size: clamp(1.875rem, 4vw, 2.25rem);
+      margin: 0 0 .833em;
+    }
+
+    .page_content .h3,
+    .page_content h3 {
+      font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    }
+
+    .promo-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px auto;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      font-family: Helvetica, sans-serif;
+      position: relative;
+    }
+
+    .promo-left,
+    .promo-right {
+      position: relative;
+    }
+
+    .promo-heading {
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .promo-heading .icon {
+      width: 18px;
+      height: 18px;
+      margin-right: 8px;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin: 5px 0 12px;
+    }
+
+    .subtext {
+      font-size: 12px;
+      color: #555;
+      margin-bottom: 12px;
+    }
+
+    .benefits {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 15px;
+      min-height: 80px;
+    }
+
+    .benefits li {
+      font-size: 12px;
+      margin: 6px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .benefits img {
+      width: 14px;
+      height: 14px;
+      margin-right: 8px;
+    }
+
+    .rbtn {
+      text-transform: none;
+      background: rgb(220, 38, 38);
+      color: #fff;
+      width: 300px;
+      line-height: 0.9rem;
+    }
+
+
+
+    .qr {
+      display: inline-block;
+      width: 60px;
+      height: 60px;
+      margin-left: 12px;
+      vertical-align: middle;
+    }
+
+    .promo-footer {
+      grid-column: 1 / span 2;
+      background: #cc9933;
+      color: #fff;
+      text-align: center;
+      padding: 8px 10px;
+      font-size: 11px;
+      border-radius: 0 0 10px 10px;
+      margin-top: 20px;
+    }
+
+    .qr img {
+      width: 55px;
+      margin-top: 3px;
+    }
+
+    .d-flex {
+      display: flex !important;
+      flex-wrap: wrap-reverse;
+    }
+
+    @media (max-width: 880px) {
+      .rbtn {
+        text-transform: none;
+        background: rgb(220, 38, 38);
+        color: #fff;
+        width: 102px;
+        line-height: 0.9rem;
+        height: 43px !important;
+      }
+    }
+
+    .qr {
+      display: inline-block;
+      width: 60px;
+      height: 60px;
+      margin-left: 12px;
+      vertical-align: middle;
+      margin-bottom: 5px;
+    }
+  </style>
+  <style>
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 20px;
+      align-items: start
+    }
+
+
+    .features {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px
+    }
+
+    .feature-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start
+    }
+
+    .feature-ico {
+      width: 44px;
+      height: 44;
+      border-radius: 8px;
+      background: #f1f8ff;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px
+    }
+
+    .feature-content h4 {
+      margin: 0;
+      font-size: 16px
+    }
+
+    .feature-content p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px
+    }
+
+    .unlock-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 18px
+    }
+
+    .card-small {
+      background: linear-gradient(180deg, #ffffff, #fbfdff);
+      border-radius: 10px;
+      padding: 14px;
+      box-shadow: 0 4px 14px rgba(2, 6, 23, 0.06);
+      border: 1px solid #eef5ff
+    }
+
+    .card-small h5 {
+      margin: 0 0 6px;
+      font-size: 15px
+    }
+
+    .card-small p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    .perks {
+      margin-top: 20px;
+      padding: 18px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #fff5f8, #fff);
+      border: 1px solid #ffeef0
+    }
+
+    .perks h3 {
+      margin: 0 0 8px
+    }
+
+    .perks ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--muted)
+    }
+
+    .referral {
+      margin-top: 18px;
+      display: flex;
+      gap: 12px;
+      flex-direction: column
+    }
+
+    .ref-tier {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #fff;
+      border: 1px dashed #e8eefc
+    }
+
+    .ref-num {
+      width: 54px;
+      height: 54;
+      border-radius: 50%;
+      background: linear-gradient(90deg, #fffbeb, #fef3c7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700
+    }
+
+    .ref-desc p {
+      margin: 0;
+      color: var(--muted)
+    }
+
+    .cta-row {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap
+    }
+
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    @media (max-width:880px) {
+      .rbtn {
+        text-transform: none;
+        background: rgb(220, 38, 38);
+        color: #fff;
+        width: 102px;
+        line-height: 0.9rem;
+      }
+
+      .benefits {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 15px;
+        min-height: 124px;
+      }
+
+      #estimate_section2 {
+        margin-top: 20% !important;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .unlock-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        padding: 16px;
+        margin: 20px auto
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000;">
+    <a href="index.php" class="logo"><img src="../../assets/images/logo.png" alt="Brand Logo"
+        style="height:40px;vertical-align:middle;"></a>
+
+    <div class="progress-container">
+
+      <div class="progress-bar-horizontal"></div>
+      <div class="progress-bar-circular"></div>
+    </div>
+    <button class="hamburger">☰</button>
+  </nav>
+
+
+
+
+
+
+
+
+  <main>
+    <!-- survey section  -->
+
+
+
+    <section class="estimate_container2 mt-10" id="estimate_section2" style="margin-top:5%">
+      <img src="thank-you-page-banner.webp" style="width:100%;height:auto">
+      <div class="container page_content" style="margin-top:3%">
+
+        <h1 class=" text-center fw-bold" style="color:#d92227">
+          Your Design Proposal is in Progress!
+        </h1>
+        <p class="h3 mb-4 text-center fw-bold">
+          Thanks for downloading your summary. Our design expert will connect within 24 hours to prepare your free
+          proposal.
+        </p>
+        <!--      <p class="text-center">-->
+        <!--          Whether you’re exploring a collaboration, need support, or want exceptional design solutions, we’re here to make your experience smooth and meaningful.-->
+        <!--      </p>-->
+        <!--<p class="text-center">-->
+        <!--          Stay tuned—we’ll be in touch soon!-->
+        <!--      </p>-->
+        <!--<h3 class="text-center fw-bold">-->
+        <!--        Take Your Next Step-->
+        <!--    </h3>-->
+        <p class="text-center">
+
+          <button onclick="windows.location='https://wa.me/919511011100'"
+            class="btn-choose-plan d-flex align-items-center gap-1 mx-auto">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none"
+              viewBox="0 0 24 24">
+              <path fill="currentColor" fill-rule="evenodd"
+                d="M12 4a8 8 0 0 0-6.895 12.06l.569.718-.697 2.359 2.32-.648.379.243A8 8 0 1 0 12 4ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.96 9.96 0 0 1-5.016-1.347l-4.948 1.382 1.426-4.829-.006-.007-.033-.055A9.958 9.958 0 0 1 2 12Z"
+                clip-rule="evenodd"></path>
+              <path fill="currentColor"
+                d="M16.735 13.492c-.038-.018-1.497-.736-1.756-.83a1.008 1.008 0 0 0-.34-.075c-.196 0-.362.098-.49.291-.146.217-.587.732-.723.886-.018.02-.042.045-.057.045-.013 0-.239-.093-.307-.123-1.564-.68-2.751-2.313-2.914-2.589-.023-.04-.024-.057-.024-.057.005-.021.058-.074.085-.101.08-.079.166-.182.249-.283l.117-.14c.121-.14.175-.25.237-.375l.033-.066a.68.68 0 0 0-.02-.64c-.034-.069-.65-1.555-.715-1.711-.158-.377-.366-.552-.655-.552-.027 0 0 0-.112.005-.137.005-.883.104-1.213.311-.35.22-.94.924-.94 2.16 0 1.112.705 2.162 1.008 2.561l.041.06c1.161 1.695 2.608 2.951 4.074 3.537 1.412.564 2.081.63 2.461.63.16 0 .288-.013.4-.024l.072-.007c.488-.043 1.56-.599 1.804-1.276.192-.534.243-1.117.115-1.329-.088-.144-.239-.216-.43-.308Z">
+              </path>
+            </svg> Chat on WhatsApp
+          </button>
+
+
+        </p>
+
+        <p class="text-center fw-bold">Redirecting in <span id="countdown">20</span> seconds...</p>
+
+        <script>
+          let timeLeft = 20;
+          const countdown = document.getElementById("countdown");
+
+          const timer = setInterval(function () {
+            timeLeft--;
+            countdown.textContent = timeLeft;
+            if (timeLeft <= 0) {
+              clearInterval(timer);
+              window.location.href = "https://alacritys.in";
+            }
+          }, 1000);
+        </script>
+
+        <!--<h3 class=" pt-3 text-center fw-bold">-->
+        <!--    What's Next?-->
+        <!--</h3>-->
+        <p class="text-center">
+          “Meet our expert designer virtually to discuss your project.”
+        </p>
+        <div class="features" style="margin-top:18px">
+          <div class="text-center">
+
+            <div class="feature-content text-center">
+              <h3>🔓 Unlock Next Features (after your proposal arrives)</h3>
+              <p>Next-level services will become available once your proposal is delivered.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="unlock-grid">
+          <div class="card-small">
+            <h3>🏢 Office Visit</h3>
+            <p>Experience our design studio in person and preview concepts in a premium setting.</p>
+          </div>
+          <div class="card-small">
+            <h3>📍 Site Visit</h3>
+            <p>Have our designer visit your property for personalized guidance.</p>
+          </div>
+          <div class="card-small">
+            <h3>💳 Token Advance</h3>
+            <p>Secure your project slot and unlock priority design services.</p>
+          </div>
+        </div>
+        <div class="promo-section">
+          <!-- LEFT COLUMN -->
+          <div class="promo-left">
+            <!--<div class="promo-heading">-->
+
+            <!--  <span></span>-->
+            <!--</div>-->
+            <h3>🎯 Complete Your Proposal & Also Claim</h3>
+
+            <p class="subtext">Complete your estimate to claim these exclusive perks</p>
+
+            <ul class="benefits">
+              <li>✔ Free 3D Design Consultation</li>
+              <li>✔ Luxury Décor Goodies</li>
+              <li>✔ Taj Dining Vouchers</li>
+            </ul>
+            <div class="d-flex">
+              <a href="https://alacritys.in/gift-free-design-consultation/" class="btn rbtn">Refer & Earn Now</a>
+              <img src="qr-alacrytis.png" alt="Referral QR" class="qr">
+            </div>
+
+          </div>
+
+          <!-- RIGHT COLUMN -->
+          <div class="promo-right">
+            <h3>💎 Claim Your Premium Benefits Today!</h3>
+            <p class="subtext">Invite friends and unlock premium lifestyle perks:</p>
+
+            <ul class="benefits">
+              <li>1 Referral → Luxury Décor Hamper</li>
+              <li>2 Referrals → Taj Staycation Voucher</li>
+              <li>3 Referrals → Rewards worth up to ₹1 Lakh on Interiors</li>
+            </ul>
+
+            <div class="d-flex">
+              <a href="https://example.com/current" id="claim" class="btn rbtn">Claim My Rewards</a>
+              <!--<div class="qr" id="qrcode"></div>-->
+
+
+              <img id="qrcode" src="websiteQRCode_noFrame.png" alt="Current QR" class="qr" style="
+    height: 70px;
+    width: 70px;
+    margin-bottom: 0px;
+">
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+
+      </div>
+      <div class="thank-you-container d-none" style="display:none">
+        <!-- Thank You Back Button -->
+
+
+        <div class="thank-you-header">
+
+          <h1>Thank You for <span>Choosing Alacritys!</span></h1>
+          <p>Your design journey has officially begun. We're excited to transform your space into something
+            extraordinary.
+          </p>
+        </div>
+
+        <div class="thank-you-card">
+          <div class="thank-you-icon">
+            <i class="fas fa-check"></i>
+          </div>
+
+          <h2 class="thank-you-title">Your Design Proposal is in Progress!</h2>
+          <p class="thank-you-message">
+            Thanks for downloading your summary. Our design expert will connect within 24 hours to prepare your free
+            proposal.
+          </p>
+
+
+
+
+          <div class="thank-you-details">
+            <div class="detail-row">
+              <span class="detail-label">Transaction ID</span>
+              <span class="detail-value" id="thankYouTransactionId">Loading...</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Date & Time</span>
+              <span class="detail-value" id="thankYouDateTime">Loading...</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Amount Paid</span>
+              <span class="detail-value" id="thankYouAmount">Loading...</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Payment Method</span>
+              <span class="detail-value" id="thankYouPaymentMethod">Loading...</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="next-steps">
+          <h2>What Happens Next?</h2>
+          <div class="steps-container">
+            <div class="step-card">
+              <div class="step-number">1</div>
+              <h3 class="step-title">Design Consultation</h3>
+              <p class="step-description">
+                Our senior designer will schedule a video call within 24 hours to understand your requirements in
+                detail.
+              </p>
+            </div>
+
+            <div class="step-card">
+              <div class="step-number">2</div>
+              <h3 class="step-title">Site Visit</h3>
+              <p class="step-description">
+                We'll arrange a site visit (if required) to take precise measurements and assess the space.
+              </p>
+            </div>
+
+            <div class="step-card">
+              <div class="step-number">3</div>
+              <h3 class="step-title">Concept Presentation</h3>
+              <p class="step-description">
+                You'll receive initial design concepts within 7-10 days for your review and feedback.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    // Your URL
+    let random4Digit = Math.floor(1000 + Math.random() * 9000);
+
+    var u2 = "https://quickchart.io/qr?text=https%3A%2F%2Fwa.me%2F919665017607%3Ftext%3DHi!%2BI%E2%80%99ve%2Bgot%2Bmy%2Bclaim%2Bcode%3A%2BCLAIM-" + random4Digit + ".%2BLooking%2Bforward%2Bto%2Bunlocking%2Bmy%2Brewards!";
+
+    var url = "https://wa.me/919665017607?text=Hi!+I’ve+got+my+claim+code:+CLAIM-" + random4Digit + ".+Looking+forward+to+unlocking+my+rewards!";
+
+    document.getElementById("claim").href = url;
+    document.getElementById("qrcode").src = u2;
+    //     // Generate QR code dynamically
+    //     var qrcode = new QRCode(document.getElementById("qrcode"), {
+    //       text: url,
+    //       width: 90,
+    //       height: 90,
+    //       colorDark: "#000000",
+    //       colorLight: "#ffffff",
+    //       correctLevel: QRCode.CorrectLevel.H
+    //     });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!--<script src="../../assets/js/app.js?v=<?php echo time(); ?>"></script>-->
+
+</body>
+
+</html>
